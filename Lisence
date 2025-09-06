@@ -1,0 +1,18 @@
+ License
+This project is open-source and available under the MIT License.
+
+
+---
+
+### **3. `requirements.txt`**
+
+pandas
+numpy
+matplotlib
+seaborn
+folium
+
+
+---
+
+### **4. `.gitignore`**
