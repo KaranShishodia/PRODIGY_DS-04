@@ -1,0 +1,89 @@
+
+---
+
+### **5. `US_Accidents_Analysis.ipynb` Content (Code and Visualizations)**
+
+This is the code for the main Jupyter Notebook. Each section is commented to explain the purpose of the code and the insights gained.
+
+### **1. Setup and Data Loading**
+
+```python
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import folium
+from folium.plugins import HeatMap
+from datetime import datetime
+
+# Load the dataset (replace with your file path if needed)
+# Make sure the file is in the 'data' directory
+df = pd.read_csv('data/US_Accidents_March23.csv')
+
+# Display basic information about the dataset
+print("--- Dataset Information ---")
+df.info()
+print("\n--- Missing Values Check ---")
+print(df.isnull().sum().sort_values(ascending=False).head(10))
+
+2. Data Preprocessing
+Python
+
+# Convert Start_Time to datetime objects
+df['Start_Time'] = pd.to_datetime(df['Start_Time'])
+
+# Extract time-based features
+df['Hour'] = df['Start_Time'].dt.hour
+df['Day_of_Week'] = df['Start_Time'].dt.day_name()
+df['Month'] = df['Start_Time'].dt.month
+df['Year'] = df['Start_Time'].dt.year
+
+# Drop columns with too many missing values or irrelevant for this analysis
+cols_to_drop = ['End_Time', 'End_Lat', 'End_Lng', 'Description', 'Weather_Timestamp', 'Airport_Code']
+df = df.drop(columns=cols_to_drop)
+
+# Fill missing weather data with a placeholder
+df['Weather_Condition'] = df['Weather_Condition'].fillna('Unknown')
+
+3. Analysis and Visualizations
+Accidents by Time of Day
+Python
+
+plt.figure(figsize=(12, 6))
+sns.histplot(df['Hour'], bins=24, kde=False)
+plt.title('Accident Count by Hour of Day')
+plt.xlabel('Hour of Day')
+plt.ylabel('Number of Accidents')
+plt.xticks(range(0, 24))
+plt.grid(axis='y', linestyle='--')
+plt.show()
+
+# Insight: Accidents peak during the morning (7-9 AM) and evening (4-6 PM) rush hours.
+<br>
+
+Accidents by Day of the Week
+Python
+
+plt.figure(figsize=(10, 6))
+order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+sns.countplot(x='Day_of_Week', data=df, order=order)
+plt.title('Accident Count by Day of the Week')
+plt.xlabel('Day of the Week')
+plt.ylabel('Number of Accidents')
+plt.show()
+
+# Insight: Weekdays, especially Friday, have the highest number of accidents.
+<br>
+
+Accidents and Weather Conditions
+Python
+
+# Get the top 15 most frequent weather conditions
+top_weather = df['Weather_Condition'].value_counts().nlargest(15).index
+
+plt.figure(figsize=(12, 8))
+sns.countplot(y='Weather_Condition', data=df, order=top_weather)
+plt.title('Accidents by Top 15 Weather Conditions')
+plt.xlabel('Number of Accidents')
+plt.ylabel('Weather Condition')
+plt.show()
