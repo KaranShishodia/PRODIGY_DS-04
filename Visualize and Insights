@@ -1,0 +1,10 @@
+ Visualizations and Insights
+The notebook will generate several visualizations, including:
+
+A plot of accidents by hour of the day.
+
+A breakdown of accidents by weather condition.
+
+A heatmap showing the geographical concentration of accidents.
+
+Feel free to modify the notebook to explore other aspects of the data.
