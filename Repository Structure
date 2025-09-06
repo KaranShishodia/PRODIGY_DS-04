@@ -1,0 +1,9 @@
+README.md: A comprehensive overview of the project, its goals, methodology, and how to run it.
+
+US_Accidents_Analysis.ipynb: The main Jupyter Notebook containing all the code for data cleaning, analysis, and visualization.
+
+requirements.txt: A list of all necessary Python libraries.
+
+.gitignore: A file to exclude unnecessary files from the repository.
+
+data/: An empty directory where the user should place the downloaded dataset.
